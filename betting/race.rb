@@ -3,14 +3,15 @@ module RaceBet
 
     class << self
       def score(guesses, winners)
-        score = (guesses[0..5] & winners[0..5]).count
+        initial_score = (guesses[0..5] & winners[0..5]).count
         scala = [14, 9, 4, 2]
 
-        (0..3).each do |i|
-          score += scala[i] if  winners[i] && guesses[i] == winners[i]
+        exact_matches_score = 0
+        scala.each_with_index do |point, i|
+          exact_matches_score += point if winners[i] && guesses[i] == winners[i]
         end
 
-        score
+        initial_score + exact_matches_score
       end
     end
 
